@@ -4,7 +4,7 @@ CXX =		c++
 
 CXXFLAGS =	-std=c++98 -Wall -Wextra -Werror -g -fsanitize=address
 
-SRCS =		$(wildcard *.cpp)
+SRCS =		main.cpp #$(wildcard *.cpp)
 
 OBJS =		$(SRCS:.cpp=.o)
 
