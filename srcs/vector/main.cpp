@@ -4,19 +4,24 @@
 
 
 void	print_vector(ft::vector<int> vec) {
-	// std::cout << vec.size() << std::endl;
-	for (int i = 0; i < (int)vec.size(); i++)
+	for (int i = 0; i < (int)vec.size(); i++) {
 		std::cout << vec[i] << std::endl;
+	}
 }
 
-void	print_vector(std::vector<int> vec) {
-	for (int i = 0; i < (int)vec.size(); i++)
-		std::cout << vec[i] << std::endl;
-}
+// void	print_vector(std::vector<int> vec) {
+// 	if (vec.size() == 0) {
+// 		std::cout << "There is nothing in htis vector" << std::endl;
+// 		return ;
+// 	}
+// 	for (int i = 0; i < (int)vec.size(); i++) {
+// 		std::cout << "Here ? " << std::endl;
+// 		std::cout << vec[i] << std::endl;
+// 	}
+// }
 
 int	main(void) {
 	ft::vector<int>	test;
-	// std::vector<int> tt;
 
 	test.push_back(1);
 	test.push_back(2);
@@ -27,47 +32,26 @@ int	main(void) {
 	test.push_back(7);
 	test.push_back(8);
 
-	// tt.push_back(5);
-	// tt.push_back(10);
-	// tt.push_back(15);
-	// tt.push_back(20);
-	// tt.push_back(25);
-	// tt.push_back(30);
-	// tt.push_back(35);
-	// tt.push_back(40);
-
-	// std::vector<int>::iterator ite;
-
-	// ite = tt.insert(tt.begin(), 99);
-	// tt.insert(ite, 30);
-	// tt.insert(ite, 34);
-	// print_vector(tt);
-	// std::cout << "===" << std::endl;
 	ft::vector<int>::iterator it = test.end();
-	// ft::vector<int>::iterator ite;
-	// print_vector(test);
-	// std::cout << "===" << std::endl;
-	// std::cout << test.size() << std::endl;
-	// it = test.insert(test.begin(), 99);
-	
-	// test.insert(it, 98);
-	// ite = test.erase(it);
 	test.insert(it, 55);
+	std::cout << "test vitesse" << std::endl;
 	print_vector(test);
-	// test.erase(test.begin(), test.end());
-	// test.insert(ite, 55);
-	std::cout << "1" << std::endl;
-	// test.insert(it, test.begin(), test.end());
-	// print_vector(test);
-	// std::cout << "===" << std::endl;
-	test.push_back(1);
+	std::cout << "=1=" << std::endl;
 	test.insert(test.begin(), 5, 2);
-	// test.assign(10, 3);
-	std::cout << "2" << std::endl;
+	std::cout << "test assgin range" << std::endl;
+	test.assign(10, 3);
+	print_vector(test);
+	std::cout << "Fin test" << std::endl;
+	std::cout << "=2=" << std::endl;
 	ft::vector<int>	r;
 
 	r.assign(test.begin(), test.end());
-	std::cout << "3" << std::endl;
+	print_vector(r);
+	std::cout << "=test erase range=" << std::endl; 
+
+
+	r.erase(r.begin(), r.end());
+	std::cout << "=3=" << std::endl;
 	// test.insert(it, 55);
 	// print_vector(test);
 	print_vector(r);
