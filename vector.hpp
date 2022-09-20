@@ -62,6 +62,7 @@ namespace ft {
 				for (int i = 0; i < (int)n; i++) {
 					this->_allocator.construct(this->_end, val);
 					this->_end++;
+					this->_used++;
 				}
 			}
 
@@ -106,7 +107,6 @@ namespace ft {
 					for (size_type i = 0; i < n; i++) {
 						this->push_back(val);
 					}
-
 				}
 			}
 
@@ -174,78 +174,60 @@ namespace ft {
 			}
 
 			void clear() {
-				for ( ; this->_start != this->_end ; ) {
-					this->_allocator.destroy(this->_end - 1);
-					this->_end--;
+				for (size_type i = 0, max = size(); i  < max ; i++) {
+					this->_allocator.destroy(this->_start + i);
 				}
 				this->_used = 0;
+				this->_end = this->_start;
 			}
 
 			iterator insert (iterator position, const value_type& val) {
-				size_type dist = this->getDistance(this->begin(), position);
+				size_type dist = std::distance(this->begin(), position);
+				// std::cout << "ds" << std::endl;
 				if (this->_used == this->_capacity)
-					reserve(this->_used + 1);
+					reserve(this->_capacity + 1);
 				for (iterator it = this->end(); it != this->begin() + dist; it--)
 					*it = *(it - 1);
 				*(this->begin() + dist) = val;
 				this->_used++;
+				this->_end++;
 				return (this->begin() + dist);
 			}
-			
+
 			void insert (iterator position, size_type n, const value_type& val) {
 				if (!n)
 					return ;
-				size_type dist = this->getDistance(this->begin(), position);
+				size_type dist = std::distance(this->begin(), position);
 				if (this->_used + n > this->_capacity)
 					reserve(this->_used + n);
-				for (iterator it = this->end() + n; it != this->begin() + dist + n - 1; it--)
-					*it = *(it - n);
-				for (size_type i = 0; i < n; i++)
+				pointer p = this->_start + this->_used + n - 1;
+				for ( ; p != this->_start + dist + n - 1; p--)
+					*p = *(p - n);
+				for (size_type i = 0; i < n; i++) {
 					*(this->_start + dist + i) = val;
+					this->_end++;
+				}
 				this->_used += n;
 				return ;
+
 			}
 
 			template <class InputIterator>
     		typename enable_if<!is_integral<InputIterator>::value, void>::type 
 			insert (iterator position, InputIterator first, InputIterator last) {
-				size_type	conserv = position.base() - this->_start;
-				// size_type	dist = std::distance(first, last);
-				ft::vector<value_type>	v;
-
-				/* Calcul distance between first and last iterator */
-				
-				InputIterator	tmp = first;
-				size_type		dist = 0;
-				for ( ; tmp != last; tmp++)
-					dist++;
-				/* Check if there is enough space in the vector to handle the n new element in coming */
-				if (dist + this->_used < this->_capacity) 
-					v.reserve(this->_capacity);
-				else
-					v.reserve(dist + 1 + this->_used);
-
-				pointer		pos = v._start + conserv;
-
-				v._end = v._start;
-				for ( ; v._end != pos ; ) {
-					v._allocator.construct(v._end, *(this->_start));
-					this->_start++;
-					v._used++;
-					v._end++;
-				}
-				for (size_type i = 0; i < dist; i++) {
-					v._allocator.construct(v._end, *(first++));
-					v._end++;
-					v._used++;
-				}
-				for ( ; this->_start != this->_end ; ) {
-					v._allocator.construct(v._end, *(this->_start));
-					this->_start++;
-					v._end++;
-					v._used++;
-				}
-				this->swap(v);
+				if (first == last)
+					return ;
+				size_type dist = std::distance(this->begin(), position);
+				size_type itSize = std::distance(first, last);
+				if (this->_used + itSize > this->_capacity)
+					reserve(this->_used + itSize);
+				pointer p = this->_start + this->_used + itSize - 1;
+				for (; p != this->_start + dist + itSize - 1; p--)
+					*p = *(p - itSize);
+				for (size_type i = 0; i < itSize; i++)
+					*(this->_start + dist + i) = *first++;
+				this->_used += itSize;
+				return ;
 			}
 
 			iterator erase(iterator pos) {
@@ -253,18 +235,18 @@ namespace ft {
 					return NULL;
 				iterator	tmp = begin();
 				size_type	diff = std::distance(begin(), pos);
-				iterator	save(this->_start + diff);
 				this->_allocator.destroy(pos.base());
 				for (size_type i = 0 ; tmp + diff + i < end() ; i++) {
 					this->_allocator.construct(this->_start + diff + i, *(this->_start + diff + i + 1));
 				}
 				this->_used--;
-				return (save);
+				return (begin() + diff);
 			}
 
 			iterator erase (iterator first, iterator last) {
 				pointer	pos	= first.base();
 				size_type	diff = std::distance(first, last);
+				// std::cout << diff << std::endl;
 				_allocator.destroy(first.base());
 				if (pos == _end - 1)
 				{
@@ -277,8 +259,10 @@ namespace ft {
 					for (size_type i = 0 ; pos + i + diff < _end ; i++ ) {
 						_allocator.construct(pos + i, *(pos + i + diff));
 						_allocator.destroy(pos + i + diff);
+						// this->_used++;
 					}
 					_end -= diff;
+					_used -= diff;
 				}
 				return (pos);
 			}
@@ -358,14 +342,14 @@ namespace ft {
 				/* Element access */
 
 			reference at (size_type n) {
-				std::cout << size() << std::endl;
+				// std::cout << size() << std::endl;
 				if (n >= size() || n < 0)
 					throw std::out_of_range("vector");
 				return (*(this->_start + n));
 			}
 
 			const_reference at (size_type n) const {
-				std::cout << size() << std::endl;
+				// std::cout << size() << std::endl;
 				if (n >= size() || n < 0)
 					throw std::out_of_range("vector");
 				return (*(this->_start + n));
@@ -410,7 +394,6 @@ namespace ft {
 			}
 
 			template <typename Iter>
-
 			size_type getDistance(Iter first, Iter last) {
 				size_type res = 0;
 				for (Iter it = first; it != last; it++)
