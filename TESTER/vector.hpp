@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdexcept>
 #include "iterator.hpp"
+#include "reverse_iterator.hpp"
 // #include <vector>
 #include <memory>
 #include <algorithm>
@@ -33,6 +34,11 @@ namespace ft {
 			typedef typename ft::random_access_iterator<pointer>			iterator;	
 			typedef ft::random_access_iterator<const_pointer>				const_iterator;	
 			typedef size_t													size_type;
+
+			// typedef ft::random_access_iterator<pointer>							iterator;
+			// typedef ft::random_access_iterator<const_pointer>					const_iterator;
+			typedef ft::reverse_iterator<iterator>									reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>							const_reverse_iterator;
 
 
 		private:
@@ -64,6 +70,7 @@ namespace ft {
 					this->_end++;
 					this->_used++;
 				}
+				//this->_end = this->_start + this->_used;
 			}
 
 			template <class InputIterator>	
@@ -301,12 +308,29 @@ namespace ft {
 				return iterator(this->_start);
 			}
 
+			reverse_iterator rbegin() {
+				return reverse_iterator(end());
+			}
+			const_reverse_iterator rbegin() const {
+				return const_reverse_iterator(end());
+			}
+
+			reverse_iterator rend( void ) {
+				return reverse_iterator(begin());
+			}
+
+			const_reverse_iterator rend( void ) const {
+				return const_reverse_iterator(begin());
+			}
+
 			iterator end() {
-				return iterator(this->_end);
+				//return iterator(this->_end);
+				return iterator(this->_start + _used);
 			}
 
 			const_iterator end() const {
-				return iterator(this->_end);
+				return iterator(this->_start + _used);
+				//return iterator(this->_end);
 			}
 				/* Capacity */
 

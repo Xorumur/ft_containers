@@ -17,7 +17,7 @@ int		main(void)
 
 	std::cout << "front(): " << vct.front() << " " << vct_c.front() << std::endl;
 	std::cout << "back(): " << vct.back() << " " <<  vct_c.back() << std::endl;
-	std::cout << "test end() : " << *vct.end() << std::endl;
+	// std::cout << "test end() : " << *vct.end() << std::endl;
 	
 	for (unsigned long int i = 0; i < vct_c.size(); ++i)
 		std::cout << "vct_c.at(): " << vct_c.at(i) << std::endl;

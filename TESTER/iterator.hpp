@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iterator> 
 #include "iterator_traits.hpp" 
+#include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -45,6 +46,9 @@ namespace ft
 
 			template <class It>
 			random_access_iterator (const random_access_iterator<It> & rhs) : _ptr(rhs.base()) { }
+
+			// template <class It>
+			// random_access_iterator (const random_access_iterator<It> & rhs) { _ptr = rhs.base();}
 
 			pointer base(void) const {
 				return(this->_ptr);
