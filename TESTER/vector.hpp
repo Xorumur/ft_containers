@@ -183,7 +183,7 @@ namespace ft {
 				size_type		tmp_used = x._used;
 
 				x._start = this->_start;
-				x._start = this->_end;
+				x._end = this->_end;
 				x._allocator = this->_allocator;
 				x._capacity = this->_capacity;
 				x._used = this->_used;
