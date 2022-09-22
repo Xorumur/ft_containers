@@ -88,9 +88,13 @@ namespace ft
 			}
 
 			random_access_iterator& operator+ (difference_type n) { 
-				this->_ptr += n;
-				return (*this);
+				return random_access_iterator(this->_ptr + n);
 			}
+
+			// random_access_iterator& operator+(size_t n) {
+			// 	this->_ptr = n + this->_ptr;
+			// 	return (*this);
+			// }
 
 			difference_type operator+ (const random_access_iterator & rhs) { 
 				return (this->_ptr + rhs._ptr);
@@ -125,6 +129,13 @@ namespace ft
 	};
 	
 	/* OUT OF CLASS OPERATORS */
+
+	template <class Iterator>
+	ft::random_access_iterator<Iterator> operator+ ( typename ft::random_access_iterator<Iterator>::difference_type n, 
+											const ft::random_access_iterator<Iterator>& it) {
+		return (it + n);
+	}
+
 
 	/* OUT OF CLASS COMPARAISONS */
 

@@ -2,7 +2,7 @@ NAME =		Vector
 
 CXX =		c++
 
-CXXFLAGS =	-std=c++98 -Wall -Wextra -Werror -g -fsanitize=address
+CXXFLAGS =	-std=c++98 -Wall -Wextra -Werror #-g -fsanitize=address
 
 SRCS =		main.cpp #$(wildcard *.cpp)
 
@@ -63,5 +63,8 @@ fclean:		clean
 			rm -rf $(NAME)
 
 re:			fclean all
+
+run: re
+	./Vector
 
 .PHONY:		re clean fclean all
