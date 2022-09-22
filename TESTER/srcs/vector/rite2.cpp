@@ -6,11 +6,15 @@ int		main(void)
 {
 	const int size = 5;
 	TESTED_NAMESPACE::vector<TESTED_TYPE> vct(size);
+	std::cout << "test" << std::endl;
 	TESTED_NAMESPACE::vector<TESTED_TYPE>::reverse_iterator it = vct.rbegin();
+	std::cout << "test" << std::endl;
 	TESTED_NAMESPACE::vector<TESTED_TYPE>::const_reverse_iterator ite = vct.rbegin();
+	std::cout << "test" << std::endl;
 
 	for (int i = 0; i < size; ++i)
 		it[i] = (size - i) * 5;
+	std::cout << "test" << std::endl;
 
 	it = it + 5;
 	it = 1 + it;

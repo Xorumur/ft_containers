@@ -22,13 +22,17 @@ namespace ft
 				typedef typename Iterator::difference_type		difference_type;
 				typedef typename Iterator::iterator_category	iterator_category;
 
+				
+
 		protected:
 				iterator_type		_base_it;
 		public:
 				reverse_iterator() { _base_it = NULL; }													// default
 				explicit reverse_iterator (iterator_type it) : _base_it(it) { }							// param
 				template <class Iter>
-				reverse_iterator (const reverse_iterator<Iter>& rev_it) : _base_it(rev_it.base()) { }	// copy
+				reverse_iterator (const reverse_iterator<Iter>& rev_it) : _base_it(rev_it.base()) { }
+
+				// operator reverse_iterator<const Iterator>() const { return this->_base_it; }
 				~reverse_iterator( void ) {  }
 
 				iterator_type base() const {
@@ -42,6 +46,11 @@ namespace ft
 				
 				pointer operator->() const {
 					return &(operator*());
+				}
+
+				reverse_iterator operator=(const reverse_iterator & rhs) {
+						_base_it = rhs.base();
+						return *this;
 				}
 
 				// ++ et --

@@ -11,10 +11,6 @@
 #include <iterator>
 #include "utils.hpp"
 // #include "bidirectional_iterator.hpp"
-/*		TO DO LIST	
-Insert quelques securites
-						*/
-
 
 namespace ft {
 
@@ -30,15 +26,12 @@ namespace ft {
 			typedef typename allocator_type::const_pointer  				const_pointer;
 			typedef	typename allocator_type::reference						reference;
 			typedef	typename allocator_type::const_reference				const_reference;
-
-			typedef typename ft::random_access_iterator<pointer>			iterator;	
-			typedef ft::random_access_iterator<const_pointer>				const_iterator;	
 			typedef size_t													size_type;
 
-			// typedef ft::random_access_iterator<pointer>							iterator;
-			// typedef ft::random_access_iterator<const_pointer>					const_iterator;
-			typedef ft::reverse_iterator<iterator>									reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>							const_reverse_iterator;
+			typedef ft::random_access_iterator<pointer>						iterator;	
+			typedef ft::random_access_iterator<const_pointer>				const_iterator;	
+			typedef ft::reverse_iterator<iterator>							reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;// = reverse_iterator;
 
 
 		private:
@@ -305,7 +298,7 @@ namespace ft {
 			}
 
 			const_iterator begin() const {
-				return iterator(this->_start);
+				return const_iterator(this->_start);
 			}
 
 			reverse_iterator rbegin() {
@@ -329,7 +322,7 @@ namespace ft {
 			}
 
 			const_iterator end() const {
-				return iterator(this->_start + _used);
+				return const_iterator(this->_start + _used);
 				//return iterator(this->_end);
 			}
 				/* Capacity */
