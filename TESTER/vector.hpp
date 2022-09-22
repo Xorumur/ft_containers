@@ -381,7 +381,7 @@ namespace ft {
 			}
 
 			const_reference at (size_type n) const {
-				// std::cout << size() << std::endl;
+				// std::cout << "Here size() : " << size() << " && the n : " << n << std::endl;
 				if (n >= size() || n < 0)
 					throw std::out_of_range("vector");
 				return (*(this->_start + n));
@@ -430,16 +430,54 @@ namespace ft {
 			const_reference operator[] (size_type n) const {
 				return (this->_start[n]);
 			}
-
-			template <typename Iter>
-			size_type getDistance(Iter first, Iter last) {
-				size_type res = 0;
-				for (Iter it = first; it != last; it++)
-					res++;
-				return (res);
-			}
-
 	};
+
+	template <class T, class Alloc>
+	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y) { x.swap(y); }
+
+	// ====================
+	// NON MEMBER OPERATORS
+	// ====================
+	
+	// ==
+	template <class T, class Alloc>
+	bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+	}
+
+	// !=
+	template <class T, class Alloc>
+	bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return (!(lhs == rhs));
+	}
+
+	// < et >
+	template <class T, class Alloc>
+	bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return ( lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()) );
+	}
+	template <class T, class Alloc>
+	bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return ( rhs < lhs );
+	}
+
+	// <= et >=
+	template <class T, class Alloc>
+	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return ( !(rhs < lhs) );
+	}
+	template <class T, class Alloc>
+	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	{
+		return ( !(lhs < rhs) );
+	}
 
 }
 

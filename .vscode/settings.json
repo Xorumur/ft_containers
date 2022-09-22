@@ -69,5 +69,6 @@
 		"set": "cpp",
 		"stack": "cpp",
 		"iterator.hpp": "c"
-	}
+	},
+	"C_Cpp.dimInactiveRegions": false
 }
