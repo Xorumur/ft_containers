@@ -1,40 +1,24 @@
-#pragma once 
+#pragma once
 
-/*	Une Node contient une valeur, une couleur (ROUGE/NOIR)
-	deux childs soit NULL soit remplit et une Node NIL 
-	qui signifie la fin d'une branche 						*/
+#include "pair.hpp"
+#include <memory>
+#include <iostream>
+#include "utils.hpp"
 
 namespace ft {
 
-	template<class T>
-	class Node {
-		public :
-			Node(const T& Value) 
-						: value(Value), right(NULL), left(NULL) { }
-			Node(const Node & rhs) 
-						: value(rhs.value), right(rhs.right), left(rhs.left) { }
-			node(const node<type>& rhs) 
-						: value(rhs.value), parent(rhs.parent), right(rhs.right), left(rhs.left) { } 
+    template < class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > > 
+    class map {
+        public:
+            typedef Key                     Key_type;
+            typedef ft::pair<const Key, T>  value_type;
+            typedef T                       mapped_type;
+            typedef size_t                  size_type;
+            typedef Alloc                   allocator_type;
+            typedef Compare                 Key_compare;
+        private:
 
-			~node() { }
-			
-
-			// La valeur de la Key
-			T		value;
-
-			// Pointer sur la Node parent
-			node*	parent;
-
-			// Pointeur sur le child de droite
-			node*	right;
-
-			// Pointeur sur le child de gauche
-			node*	left;
-
-			// Pointer sur la Node NIL
-			node*	NIL;
-
-			// Couleur Rouge/Noir
-			bool	color;
-	};
+        public:
+            map();
+    };
 }
